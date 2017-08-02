@@ -27636,6 +27636,7 @@ var Tweet = function (_React$Component) {
 
         _this.state = { items: [] };
         _this.search = _this.search.bind(_this);
+        _this.paging = _this.paging.bind(_this);
         return _this;
     }
 
@@ -27644,7 +27645,7 @@ var Tweet = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            _superagent2.default.get('/api/v1/tweet/sara').end(function (err, res) {
+            _superagent2.default.get('/api/v1/tweet/sara/12').end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
@@ -27657,12 +27658,28 @@ var Tweet = function (_React$Component) {
         value: function search(event) {
             var _this3 = this;
 
-            _superagent2.default.get('/api/v1/tweet/' + event.target.value).end(function (err, res) {
+            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/12').end(function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+
+                var data = JSON.parse(res.text);
+                _this3.setState({ items: data.statuses });
+            });
+        }
+    }, {
+        key: 'paging',
+        value: function paging() {
+            var _this4 = this;
+
+            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/24').end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
                 var data = JSON.parse(res.text);
-                _this3.setState({ items: data.statuses });
+                _this4.setState({ items: data.statuses });
+
+                console.log("paging");
             });
         }
     }, {

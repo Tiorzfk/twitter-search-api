@@ -28,7 +28,7 @@ function Todo ()
 
         var options = {
             method: 'GET',
-            url: 'https://api.twitter.com/1.1/search/tweets.json?q='+req.params.query+'&lang=in&count=16',
+            url: 'https://api.twitter.com/1.1/search/tweets.json?q='+req.params.query+'&lang=in&count='+req.params.page+'',
             headers: {
                 'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAEf51gAAAAAAglFlYzIXrKkKR4UoxwfZbxNaG1w%3DqO6bKJALKppXZZmOIPmncQtVBq521Rx8imjaVMKFOtZzzeZVRZ',
                 'Content-Type': 'application/json'
@@ -70,7 +70,10 @@ function Todo ()
 
             return res.json({status:200,message:'Success insert data'});
             });
+    }
 
+    this.callbackAuth = (req,res,next) => {
+        return res.json(req.query);
     }
 }
 
