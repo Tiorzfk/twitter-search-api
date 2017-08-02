@@ -27814,7 +27814,7 @@ var TweetList = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'card' },
-                    _react2.default.createElement('img', { className: 'card-img-top', src: this.props.data.user.profile_banner_url ? this.props.data.user.profile_banner_url : '/img/banner.jpg', alt: 'Card image cap' }),
+                    _react2.default.createElement('img', { className: 'card-img-top', src: this.props.data.user.profile_banner_url ? this.props.data.user.profile_banner_url : '/img/banner.jpg', alt: 'Divernity Image' }),
                     _react2.default.createElement(
                         'div',
                         { className: 'card-block' },

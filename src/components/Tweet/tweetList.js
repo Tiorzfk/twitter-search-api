@@ -53,7 +53,7 @@ class TweetList extends React.Component {
         return (                
                     <div className="col-md-3">
                         <div className="card">
-                            <img className="card-img-top" src={this.props.data.user.profile_banner_url ?this.props.data.user.profile_banner_url:'/img/banner.jpg'} alt="Card image cap" />
+                            <img className="card-img-top" src={this.props.data.user.profile_banner_url ?this.props.data.user.profile_banner_url:'/img/banner.jpg'} alt="Divernity Image" />
                             <div className="card-block">
                             <h4 className="card-title">{this.props.data.user.name}</h4>
                             <p className="card-text">{this.props.data.text}</p>
