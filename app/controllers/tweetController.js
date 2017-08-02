@@ -73,7 +73,31 @@ function Todo ()
     }
 
     this.callbackAuth = (req,res,next) => {
-        return res.json(req.query);
+        var data = {
+            client_id : "b4b96d8f595b4cf3800e52df12eba67d",
+            client_secret : "5c3fcb14e66d458d89435922d3bb8d82",
+            redirect_uri : "http://divernity.azurewebsites.net/api/v1/tweet/callback",
+            code : req.query.code,
+            grant_type : "authorization_code"
+        }
+        var options = {
+            method: 'GET',
+            url: 'https://api.instagram.com/oauth/access_token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            form: data
+        };
+        function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var info = JSON.parse(body);
+            return res.json(info);
+        }
+        if(error)
+            console.log(error);
+        }
+
+        request(options, callback);
     }
 }
 
