@@ -1,0 +1,21 @@
+.card {
+	background: #fff;
+	box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+img {
+		width: 100%;
+	}
+
+[class*="row"] {
+	margin-bottom: 1em;
+  justify-content: center;
+}
+
+[class*="col-"] {
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	width: 100%;
+}
+
+.container-fluid { max-width: 1200px; }

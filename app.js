@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('./config/mongoose');
+var db = mongoose();
+
 var index = require('./app/routes/index');
 var users = require('./app/routes/users');
 
@@ -22,8 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', index);
-app.use('/api/users', users);
+app.use('/api/v1', index);
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
