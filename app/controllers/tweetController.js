@@ -81,7 +81,7 @@ function Todo ()
             grant_type : "authorization_code"
         }
         var options = {
-            method: 'GET',
+            method: 'POST',
             url: 'https://api.instagram.com/oauth/access_token',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
