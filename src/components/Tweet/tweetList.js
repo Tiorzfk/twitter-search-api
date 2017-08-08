@@ -7,11 +7,25 @@ class TweetList extends React.Component {
         super(props);
         this.state = {
             show : true,
+            btnNegatif : 'Negative',
+            btnPositif : 'Positive',
+            disabledBtn : false
         };
         this.date.bind(this);
     }
 
     simpan(data) {
+        if(data.status == 'negative'){
+            this.setState({
+                btnNegatif : 'Loading...',
+                disabledBtn : true
+            });
+        }else{
+            this.setState({
+                btnPositif : 'Loading...',
+                disabledBtn : true
+            });
+        }
         request
 			.post('/api/v1/tweet')
             .send(data)
@@ -20,6 +34,18 @@ class TweetList extends React.Component {
 				if (err) {
 					console.log(err);
 				}
+
+                if(data.status == 'negative'){
+                    this.setState({
+                        btnNegatif : 'Negatif',
+                        disabledBtn : false
+                    });
+                }else{
+                    this.setState({
+                        btnPositif : 'Positif',
+                        disabledBtn : false
+                    });
+                }
 				
                 alert("Berhasil");
 			})
@@ -58,26 +84,28 @@ class TweetList extends React.Component {
                             <h4 className="card-title">{this.props.data.user.name}</h4>
                             <p className="card-text">{this.props.data.text}</p>
                             <p className="card-text">
-                                <button onClick={this.simpan.bind(this,{
+                                <button disabled={this.state.disabledBtn} onClick={this.simpan.bind(this,{
                                     id:this.props.data.id_str,
                                     username: this.props.data.user.screen_name,
                                     foto: this.props.data.user.profile_image_url,
                                     tgl: this.date(),
-                                    latitude: 12312,
-                                    longitude: 12312,
+                                    latitude: 0,
+                                    longitude: 0,
+                                    lokasi: this.props.data.user.location,
                                     tweet: this.props.data.text,
                                     status: 'positive'
-                                })} className="btn btn-info btn-md">Positive</button> 
-                                <button onClick={this.simpan.bind(this,{
+                                })} className="btn btn-info btn-md">{this.state.btnPositif}</button> 
+                                <button disabled={this.state.disabledBtn} onClick={this.simpan.bind(this,{
                                     id:this.props.data.id_str,
                                     username: this.props.data.user.screen_name,
                                     foto: this.props.data.user.profile_image_url,
                                     tgl: this.date(),
-                                    latitude: 12312,
-                                    longitude: 12312,
+                                    latitude: 0,
+                                    longitude: 0,
+                                    lokasi: this.props.data.user.location,
                                     tweet: this.props.data.text,
-                                    status: 'positive'
-                                })} className="btn btn-danger btn-md">Negative</button></p>
+                                    status: 'negative'
+                                })} className="btn btn-danger btn-md">{this.state.btnNegatif}</button></p>
                             </div>
                         </div>
                     </div>

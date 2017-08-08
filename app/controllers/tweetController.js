@@ -57,7 +57,8 @@ function Todo ()
                 latitude: req.body.latitude,
                 longitude: req.body.longitude,
                 tweet: req.body.tweet,
-                status: req.body.status
+                status: req.body.status,
+                lokasi: req.body.lokasi
             }
 
             console.log(data);
@@ -72,7 +73,7 @@ function Todo ()
             });
     }
 
-    this.callbackAuth = (req,res,next) => {
+    this.callbackAuthInstagram = (req,res,next) => {
         var data = {
             client_id : "b4b96d8f595b4cf3800e52df12eba67d",
             client_secret : "5c3fcb14e66d458d89435922d3bb8d82",

@@ -27636,7 +27636,7 @@ var Tweet = function (_React$Component) {
 
         _this.state = { items: [] };
         _this.search = _this.search.bind(_this);
-        _this.paging = _this.paging.bind(_this);
+        // this.paging = this.paging.bind(this);
         return _this;
     }
 
@@ -27645,7 +27645,7 @@ var Tweet = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            _superagent2.default.get('/api/v1/tweet/sara/12').end(function (err, res) {
+            _superagent2.default.get('/api/v1/tweet/sara/60').end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
@@ -27658,7 +27658,7 @@ var Tweet = function (_React$Component) {
         value: function search(event) {
             var _this3 = this;
 
-            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/12').end(function (err, res) {
+            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/60').end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
@@ -27667,21 +27667,21 @@ var Tweet = function (_React$Component) {
                 _this3.setState({ items: data.statuses });
             });
         }
-    }, {
-        key: 'paging',
-        value: function paging() {
-            var _this4 = this;
 
-            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/24').end(function (err, res) {
-                if (err) {
-                    console.log(err);
-                }
-                var data = JSON.parse(res.text);
-                _this4.setState({ items: data.statuses });
+        // paging() {
+        //     request
+        // 		.get('/api/v1/tweet/'+event.target.value+'/24')
+        // 		.end((err, res) => {
+        // 			if (err) {
+        // 				console.log(err);
+        // 			}
+        //             const data = JSON.parse(res.text)
+        // 			this.setState({items:data.statuses});
 
-                console.log("paging");
-            });
-        }
+        //             console.log("paging");
+        // 		})
+        // }
+
     }, {
         key: 'render',
         value: function render() {
@@ -27780,7 +27780,10 @@ var TweetList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (TweetList.__proto__ || Object.getPrototypeOf(TweetList)).call(this, props));
 
         _this.state = {
-            show: true
+            show: true,
+            btnNegatif: 'Negative',
+            btnPositif: 'Positive',
+            disabledBtn: false
         };
         _this.date.bind(_this);
         return _this;
@@ -27789,9 +27792,34 @@ var TweetList = function (_React$Component) {
     _createClass(TweetList, [{
         key: 'simpan',
         value: function simpan(data) {
+            var _this2 = this;
+
+            if (data.status == 'negative') {
+                this.setState({
+                    btnNegatif: 'Loading...',
+                    disabledBtn: true
+                });
+            } else {
+                this.setState({
+                    btnPositif: 'Loading...',
+                    disabledBtn: true
+                });
+            }
             _superagent2.default.post('/api/v1/tweet').send(data).set('Content-Type', 'application/x-www-form-urlencoded').end(function (err, res) {
                 if (err) {
                     console.log(err);
+                }
+
+                if (data.status == 'negative') {
+                    _this2.setState({
+                        btnNegatif: 'Negatif',
+                        disabledBtn: false
+                    });
+                } else {
+                    _this2.setState({
+                        btnPositif: 'Positif',
+                        disabledBtn: false
+                    });
                 }
 
                 alert("Berhasil");
@@ -27850,31 +27878,33 @@ var TweetList = function (_React$Component) {
                             { className: 'card-text' },
                             _react2.default.createElement(
                                 'button',
-                                { onClick: this.simpan.bind(this, {
+                                { disabled: this.state.disabledBtn, onClick: this.simpan.bind(this, {
                                         id: this.props.data.id_str,
                                         username: this.props.data.user.screen_name,
                                         foto: this.props.data.user.profile_image_url,
                                         tgl: this.date(),
-                                        latitude: 12312,
-                                        longitude: 12312,
+                                        latitude: 0,
+                                        longitude: 0,
+                                        lokasi: this.props.data.user.location,
                                         tweet: this.props.data.text,
                                         status: 'positive'
                                     }), className: 'btn btn-info btn-md' },
-                                'Positive'
+                                this.state.btnPositif
                             ),
                             _react2.default.createElement(
                                 'button',
-                                { onClick: this.simpan.bind(this, {
+                                { disabled: this.state.disabledBtn, onClick: this.simpan.bind(this, {
                                         id: this.props.data.id_str,
                                         username: this.props.data.user.screen_name,
                                         foto: this.props.data.user.profile_image_url,
                                         tgl: this.date(),
-                                        latitude: 12312,
-                                        longitude: 12312,
+                                        latitude: 0,
+                                        longitude: 0,
+                                        lokasi: this.props.data.user.location,
                                         tweet: this.props.data.text,
-                                        status: 'positive'
+                                        status: 'negative'
                                     }), className: 'btn btn-danger btn-md' },
-                                'Negative'
+                                this.state.btnNegatif
                             )
                         )
                     )

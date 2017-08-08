@@ -9,7 +9,8 @@ var Schema = new Schema({
     latitude: Number,
     longitude: Number,
     tweet: String,
-	status: String
+	status: String,
+	lokasi : String
 });
 
 mongoose.model("Tweet", Schema);

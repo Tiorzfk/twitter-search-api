@@ -9,12 +9,12 @@ class Tweet extends React.Component {
         super();
         this.state = { items: []};
         this.search = this.search.bind(this);
-        this.paging = this.paging.bind(this);
+        // this.paging = this.paging.bind(this);
     }
 
 	componentDidMount() {
 		request
-			.get('/api/v1/tweet/sara/12')
+			.get('/api/v1/tweet/sara/60')
 			.end((err, res) => {
 				if (err) {
 					console.log(err);
@@ -26,7 +26,7 @@ class Tweet extends React.Component {
 
     search(event) {
         request
-			.get('/api/v1/tweet/'+event.target.value+'/12')
+			.get('/api/v1/tweet/'+event.target.value+'/60')
 			.end((err, res) => {
 				if (err) {
 					console.log(err);
@@ -37,19 +37,19 @@ class Tweet extends React.Component {
 			})
     }
 
-    paging() {
-        request
-			.get('/api/v1/tweet/'+event.target.value+'/24')
-			.end((err, res) => {
-				if (err) {
-					console.log(err);
-				}
-                const data = JSON.parse(res.text)
-				this.setState({items:data.statuses});
+    // paging() {
+    //     request
+	// 		.get('/api/v1/tweet/'+event.target.value+'/24')
+	// 		.end((err, res) => {
+	// 			if (err) {
+	// 				console.log(err);
+	// 			}
+    //             const data = JSON.parse(res.text)
+	// 			this.setState({items:data.statuses});
 
-                console.log("paging");
-			})
-    }
+    //             console.log("paging");
+	// 		})
+    // }
 
     render() {
         return(
