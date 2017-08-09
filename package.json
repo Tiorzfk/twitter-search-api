@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set DEBUG=divernity:* & node ./server"
+    "start": "set DEBUG=divernity:* & node ./server",
+    "webpack": "webpack --config webpack.config.js --watch"
   },
   "dependencies": {
     "babel-core": "^6.24.1",
@@ -29,6 +30,7 @@
     "webpack": "^3.4.1"
   },
   "devDependencies": {
-    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0"
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "webpack": "^3.5.1"
   }
 }

@@ -1,0 +1,20 @@
+Jawa Barat
+
+lat  : -6.968956
+lang : 107.904789
+Radius : 120 Km
+
+Jawa Timur
+
+lat : -9.223029
+lang : 112.488834
+Radius : 190 Km
+
+Jawa Tengah
+
+lat : -7.218152
+lang : 110.118002
+Radius : 160 Km
+
+
+

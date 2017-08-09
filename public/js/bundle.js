@@ -27634,8 +27634,16 @@ var Tweet = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Tweet.__proto__ || Object.getPrototypeOf(Tweet)).call(this));
 
-        _this.state = { items: [] };
+        _this.state = {
+            items: [],
+            region: '-6.926356,107.663432,120km',
+            btnSearch: 'Kirim',
+            btnSearchDisabled: false,
+            valueSearch: ''
+        };
         _this.search = _this.search.bind(_this);
+        _this.changeSearch = _this.changeSearch.bind(_this);
+        _this.changeRegion = _this.changeRegion.bind(_this);
         // this.paging = this.paging.bind(this);
         return _this;
     }
@@ -27645,7 +27653,7 @@ var Tweet = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            _superagent2.default.get('/api/v1/tweet/sara/60').end(function (err, res) {
+            _superagent2.default.get('/api/v1/tweet/unikom/' + this.state.region).end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
@@ -27658,28 +27666,56 @@ var Tweet = function (_React$Component) {
         value: function search(event) {
             var _this3 = this;
 
-            _superagent2.default.get('/api/v1/tweet/' + event.target.value + '/60').end(function (err, res) {
+            console.log("Region : " + this.state.region);
+            this.setState({
+                btnSearchDisabled: true,
+                btnSearch: 'Loading..',
+                region: event.target.value
+            });
+            _superagent2.default.get('/api/v1/tweet/' + this.state.valueSearch + '/' + this.state.region).end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
-
+                console.log("Region " + _this3.state.region);
                 var data = JSON.parse(res.text);
-                _this3.setState({ items: data.statuses });
+                _this3.setState({
+                    items: data.statuses,
+                    btnSearchDisabled: false,
+                    btnSearch: 'Kirim'
+                });
             });
         }
+    }, {
+        key: 'changeSearch',
+        value: function changeSearch(event) {
+            this.setState({ valueSearch: event.target.value });
+        }
+    }, {
+        key: 'changeRegion',
+        value: function changeRegion(event) {
+            this.setState({ region: event.target.value });
+        }
 
-        // paging() {
+        // change(event){
+        //     this.setState({
+        //       btnSearchDisabled: true,
+        //       btnSearch: 'Loading..',
+        //       region: event.target.value
+        //     });
+        //     console.log(this.state.valueSearch);
         //     request
-        // 		.get('/api/v1/tweet/'+event.target.value+'/24')
+        // 		.get('/api/v1/tweet/'+this.state.valueSearch+'/'+event.target.value)
         // 		.end((err, res) => {
         // 			if (err) {
         // 				console.log(err);
         // 			}
+        //             this.setState({
+        //                 btnSearchDisabled: false,
+        //                 btnSearch: 'Kirim'
+        //             });
         //             const data = JSON.parse(res.text)
-        // 			this.setState({items:data.statuses});
-
-        //             console.log("paging");
-        // 		})
+        //                 this.setState({items:data.statuses});
+        //             })
         // }
 
     }, {
@@ -27693,11 +27729,52 @@ var Tweet = function (_React$Component) {
                     { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-4 col-md-offset-4' },
+                        { className: 'col-md-2' },
+                        _react2.default.createElement(
+                            'select',
+                            { id: 'pilihDaerah', onChange: this.changeRegion, className: 'form-control' },
+                            _react2.default.createElement(
+                                'option',
+                                { value: 'pilih' },
+                                '-Pilih-'
+                            ),
+                            _react2.default.createElement(
+                                'option',
+                                { value: '-6.926356,107.663432,120km' },
+                                'Jawa Barat'
+                            ),
+                            _react2.default.createElement(
+                                'option',
+                                { value: '-7.218152,110.118002,160km' },
+                                'Jawa Tengah'
+                            ),
+                            _react2.default.createElement(
+                                'option',
+                                { value: '-9.223029,112.488834,190km' },
+                                'Jawa Timur'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-4' },
                         _react2.default.createElement(
                             'div',
                             { className: 'form-group' },
-                            _react2.default.createElement('input', { type: 'text', onChange: this.search, className: 'form-control', placeholder: 'Search' })
+                            _react2.default.createElement('input', { value: this.state.valueSearch, onChange: this.changeSearch, type: 'text', className: 'form-control', placeholder: 'Search' })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-2' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'button',
+                                { disabled: this.state.btnSearchDisabled, className: 'btn btn-primary', onClick: this.search },
+                                this.state.btnSearch
+                            )
                         )
                     )
                 ),

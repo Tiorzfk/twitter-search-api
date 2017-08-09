@@ -2,7 +2,7 @@ var https = require('https');
 var request = require('request');
 var tweet = require('mongoose').model('Tweet');
 
-function Todo () 
+function Todo ()
 {
     this.index = (req,res,next) => {
 
@@ -28,7 +28,7 @@ function Todo ()
 
         var options = {
             method: 'GET',
-            url: 'https://api.twitter.com/1.1/search/tweets.json?q='+req.params.query+'&lang=in&count='+req.params.page+'',
+            url: 'https://api.twitter.com/1.1/search/tweets.json?q='+req.params.query+'&geocode='+req.params.region+'&lang=in&count=100&result_type=recent',
             headers: {
                 'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAEf51gAAAAAAglFlYzIXrKkKR4UoxwfZbxNaG1w%3DqO6bKJALKppXZZmOIPmncQtVBq521Rx8imjaVMKFOtZzzeZVRZ',
                 'Content-Type': 'application/json'
