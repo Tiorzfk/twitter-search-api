@@ -16,5 +16,11 @@ lat : -7.218152
 lang : 110.118002
 Radius : 160 Km
 
+DKI
+
+lar : -6.44776
+lang : 106.982778
+Radius : 120 Km
+
 
 

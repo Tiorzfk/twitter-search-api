@@ -36,8 +36,7 @@ class Tweet extends React.Component {
         console.log("Region : "+this.state.region);
         this.setState({
           btnSearchDisabled: true,
-          btnSearch: 'Loading..',
-          region: event.target.value
+          btnSearch: 'Loading..'
         });
         request
     		.get('/api/v1/tweet/'+this.state.valueSearch+'/'+this.state.region)
@@ -45,13 +44,13 @@ class Tweet extends React.Component {
     			if (err) {
     				console.log(err);
     			}
-                console.log("Region "+this.state.region);
-                const data = JSON.parse(res.text)
-    			this.setState({
-                    items:data.statuses,
-                    btnSearchDisabled: false,
-                    btnSearch: 'Kirim'
-                });
+                const data = JSON.parse(res.text);
+                this.setState({
+                        items:data.statuses,
+                        btnSearchDisabled: false,
+                        btnSearch: 'Kirim'
+                    });
+                // console.log(data.statuses);
   			});
     }
 

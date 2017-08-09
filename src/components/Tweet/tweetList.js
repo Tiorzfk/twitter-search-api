@@ -46,8 +46,8 @@ class TweetList extends React.Component {
                         disabledBtn : false
                     });
                 }
-				
-                alert("Berhasil");
+				console.log(res.body);
+                alert(res.body.message);
 			})
         {/*<SweetAlert
             show={this.state.show}
@@ -85,7 +85,7 @@ class TweetList extends React.Component {
                             <p className="card-text">{this.props.data.text}</p>
                             <p className="card-text">
                                 <button disabled={this.state.disabledBtn} onClick={this.simpan.bind(this,{
-                                    id:this.props.data.id_str,
+                                    id_str:this.props.data.id_str,
                                     username: this.props.data.user.screen_name,
                                     foto: this.props.data.user.profile_image_url,
                                     tgl: this.date(),
@@ -96,7 +96,7 @@ class TweetList extends React.Component {
                                     status: 'positive'
                                 })} className="btn btn-info btn-md">{this.state.btnPositif}</button> 
                                 <button disabled={this.state.disabledBtn} onClick={this.simpan.bind(this,{
-                                    id:this.props.data.id_str,
+                                    id_str:this.props.data.id_str,
                                     username: this.props.data.user.screen_name,
                                     foto: this.props.data.user.profile_image_url,
                                     tgl: this.date(),

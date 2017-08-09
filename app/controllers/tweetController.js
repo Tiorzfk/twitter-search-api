@@ -49,8 +49,8 @@ function Todo ()
 
     this.simpanTweet = (req,res,next) => {
 
-            var data = {
-                id: req.body.id_str,
+            var dataTweet = {
+                id_str: req.body.id_str,
                 username: req.body.username,
                 foto: req.body.foto,
                 tgl: req.body.tgl,
@@ -61,16 +61,21 @@ function Todo ()
                 lokasi: req.body.lokasi
             }
 
-            console.log(data);
+            tweet.find({'id_str' : dataTweet.id_str}, (err,data) => {
+                if(data.length == 0) {
+                    var twt = new tweet(dataTweet);
+                    twt.save(function(err,data) {
+                        if (err) {
+                            return res.json({status:400,message:err});
+                        }
 
-            var twt = new tweet(data);
-            twt.save(function(err,data) {
-            if (err) {
-                    return res.json({status:400,message:err});
+                        return res.json({status:200,message:'Tweet Berhasil Disimpan'});
+                    });
+                }else{
+                    return res.json({status:400,message:'Tweet sudah di klasifikai'});
                 }
-
-            return res.json({status:200,message:'Success insert data'});
             });
+            
     }
 
     this.callbackAuthInstagram = (req,res,next) => {

@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var Schema = new Schema({
 	id: String,
+	id_str: String,
 	username: String,
 	foto: String,
 	tgl: String,

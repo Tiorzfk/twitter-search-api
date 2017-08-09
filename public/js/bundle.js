@@ -27669,20 +27669,19 @@ var Tweet = function (_React$Component) {
             console.log("Region : " + this.state.region);
             this.setState({
                 btnSearchDisabled: true,
-                btnSearch: 'Loading..',
-                region: event.target.value
+                btnSearch: 'Loading..'
             });
             _superagent2.default.get('/api/v1/tweet/' + this.state.valueSearch + '/' + this.state.region).end(function (err, res) {
                 if (err) {
                     console.log(err);
                 }
-                console.log("Region " + _this3.state.region);
                 var data = JSON.parse(res.text);
                 _this3.setState({
                     items: data.statuses,
                     btnSearchDisabled: false,
                     btnSearch: 'Kirim'
                 });
+                // console.log(data.statuses);
             });
         }
     }, {
@@ -27898,8 +27897,8 @@ var TweetList = function (_React$Component) {
                         disabledBtn: false
                     });
                 }
-
-                alert("Berhasil");
+                console.log(res.body);
+                alert(res.body.message);
             });
             {/*<SweetAlert
                    show={this.state.show}
@@ -27956,7 +27955,7 @@ var TweetList = function (_React$Component) {
                             _react2.default.createElement(
                                 'button',
                                 { disabled: this.state.disabledBtn, onClick: this.simpan.bind(this, {
-                                        id: this.props.data.id_str,
+                                        id_str: this.props.data.id_str,
                                         username: this.props.data.user.screen_name,
                                         foto: this.props.data.user.profile_image_url,
                                         tgl: this.date(),
@@ -27971,7 +27970,7 @@ var TweetList = function (_React$Component) {
                             _react2.default.createElement(
                                 'button',
                                 { disabled: this.state.disabledBtn, onClick: this.simpan.bind(this, {
-                                        id: this.props.data.id_str,
+                                        id_str: this.props.data.id_str,
                                         username: this.props.data.user.screen_name,
                                         foto: this.props.data.user.profile_image_url,
                                         tgl: this.date(),
