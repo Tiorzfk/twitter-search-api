@@ -46,7 +46,7 @@ class TweetList extends React.Component {
                         disabledBtn : false
                     });
                 }
-				console.log(res.body);
+				// console.log(res.body);
                 alert(res.body.message);
 			})
         {/*<SweetAlert
@@ -91,7 +91,7 @@ class TweetList extends React.Component {
                                     tgl: this.date(),
                                     latitude: 0,
                                     longitude: 0,
-                                    lokasi: this.props.data.user.location,
+                                    lokasi: this.props.regionName,
                                     tweet: this.props.data.text,
                                     status: 'positive'
                                 })} className="btn btn-info btn-md">{this.state.btnPositif}</button> 
@@ -102,7 +102,7 @@ class TweetList extends React.Component {
                                     tgl: this.date(),
                                     latitude: 0,
                                     longitude: 0,
-                                    lokasi: this.props.data.user.location,
+                                    lokasi: this.props.regionName,
                                     tweet: this.props.data.text,
                                     status: 'negative'
                                 })} className="btn btn-danger btn-md">{this.state.btnNegatif}</button></p>

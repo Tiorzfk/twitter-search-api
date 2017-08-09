@@ -27636,14 +27636,16 @@ var Tweet = function (_React$Component) {
 
         _this.state = {
             items: [],
-            region: '-6.926356,107.663432,120km',
+            region: '',
+            regionName: '',
             btnSearch: 'Kirim',
-            btnSearchDisabled: false,
+            btnSearchDisabled: true,
             valueSearch: ''
         };
         _this.search = _this.search.bind(_this);
         _this.changeSearch = _this.changeSearch.bind(_this);
         _this.changeRegion = _this.changeRegion.bind(_this);
+
         // this.paging = this.paging.bind(this);
         return _this;
     }
@@ -27657,8 +27659,10 @@ var Tweet = function (_React$Component) {
                 if (err) {
                     console.log(err);
                 }
-                var data = JSON.parse(res.text);
-                _this2.setState({ items: data.statuses });
+                if (_this2.state.region != '') {
+                    var data = JSON.parse(res.text);
+                    _this2.setState({ items: data.statuses });
+                }
             });
         }
     }, {
@@ -27688,38 +27692,28 @@ var Tweet = function (_React$Component) {
         key: 'changeSearch',
         value: function changeSearch(event) {
             this.setState({ valueSearch: event.target.value });
+            if (this.state.valueSearch == '' || this.state.region == '') {
+                this.setState({ btnSearchDisabled: true });
+            } else {
+                this.setState({ btnSearchDisabled: false });
+            }
         }
     }, {
         key: 'changeRegion',
         value: function changeRegion(event) {
-            this.setState({ region: event.target.value });
+            var a = event.target.value.split("#");
+            this.setState({ region: a[0], regionName: a[1] });
+            if (a[0] == '' || this.state.valueSearch == '') {
+                this.setState({ btnSearchDisabled: true });
+            } else {
+                this.setState({ btnSearchDisabled: false });
+            }
         }
-
-        // change(event){
-        //     this.setState({
-        //       btnSearchDisabled: true,
-        //       btnSearch: 'Loading..',
-        //       region: event.target.value
-        //     });
-        //     console.log(this.state.valueSearch);
-        //     request
-        // 		.get('/api/v1/tweet/'+this.state.valueSearch+'/'+event.target.value)
-        // 		.end((err, res) => {
-        // 			if (err) {
-        // 				console.log(err);
-        // 			}
-        //             this.setState({
-        //                 btnSearchDisabled: false,
-        //                 btnSearch: 'Kirim'
-        //             });
-        //             const data = JSON.parse(res.text)
-        //                 this.setState({items:data.statuses});
-        //             })
-        // }
-
     }, {
         key: 'render',
         value: function render() {
+            var _this4 = this;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'container-fluid', style: _style2.default },
@@ -27739,17 +27733,17 @@ var Tweet = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'option',
-                                { value: '-6.926356,107.663432,120km' },
+                                { value: '-6.92712,107.603112,60km#Jawa Barat' },
                                 'Jawa Barat'
                             ),
                             _react2.default.createElement(
                                 'option',
-                                { value: '-7.218152,110.118002,160km' },
+                                { value: '-6.807228,110.518343,70km#Jawa Tengah' },
                                 'Jawa Tengah'
                             ),
                             _react2.default.createElement(
                                 'option',
-                                { value: '-9.223029,112.488834,190km' },
+                                { value: '-7.743389,112.999674,120km#Jawa Timur' },
                                 'Jawa Timur'
                             )
                         )
@@ -27777,11 +27771,19 @@ var Tweet = function (_React$Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(
+                this.state.region == '' || this.state.valueSearch == '' ? _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Silahkan Search Sendiri'
+                    )
+                ) : _react2.default.createElement(
                     'div',
                     { className: 'row' },
                     this.state.items.map(function (item) {
-                        return _react2.default.createElement(_tweetList2.default, { key: item.id_str, data: item });
+                        return _react2.default.createElement(_tweetList2.default, { key: item.id_str, data: item, regionName: _this4.state.regionName });
                     })
                 )
             );
@@ -27897,7 +27899,7 @@ var TweetList = function (_React$Component) {
                         disabledBtn: false
                     });
                 }
-                console.log(res.body);
+                // console.log(res.body);
                 alert(res.body.message);
             });
             {/*<SweetAlert
@@ -27961,7 +27963,7 @@ var TweetList = function (_React$Component) {
                                         tgl: this.date(),
                                         latitude: 0,
                                         longitude: 0,
-                                        lokasi: this.props.data.user.location,
+                                        lokasi: this.props.regionName,
                                         tweet: this.props.data.text,
                                         status: 'positive'
                                     }), className: 'btn btn-info btn-md' },
@@ -27976,7 +27978,7 @@ var TweetList = function (_React$Component) {
                                         tgl: this.date(),
                                         latitude: 0,
                                         longitude: 0,
-                                        lokasi: this.props.data.user.location,
+                                        lokasi: this.props.regionName,
                                         tweet: this.props.data.text,
                                         status: 'negative'
                                     }), className: 'btn btn-danger btn-md' },

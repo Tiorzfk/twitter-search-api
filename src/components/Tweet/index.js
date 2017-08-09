@@ -9,26 +9,30 @@ class Tweet extends React.Component {
         super();
         this.state = {
           items: [],
-          region: '-6.926356,107.663432,120km',
+          region: '',
+          regionName: '',
           btnSearch: 'Kirim',
-          btnSearchDisabled: false,
+          btnSearchDisabled: true,
           valueSearch: ''
         };
         this.search = this.search.bind(this);
         this.changeSearch = this.changeSearch.bind(this);
         this.changeRegion = this.changeRegion.bind(this);
+        
         // this.paging = this.paging.bind(this);
     }
-
 	componentDidMount() {
+        
 		request
 			.get('/api/v1/tweet/unikom/'+this.state.region)
 			.end((err, res) => {
 				if (err) {
 					console.log(err);
 				}
-				const data = JSON.parse(res.text)
-				this.setState({items:data.statuses});
+                if(this.state.region != '') {
+				    const data = JSON.parse(res.text)
+				    this.setState({items:data.statuses});
+                }
 			})
     }
 
@@ -56,33 +60,22 @@ class Tweet extends React.Component {
 
     changeSearch(event) {
       this.setState({valueSearch: event.target.value});
+      if(this.state.valueSearch == '' || this.state.region == '') {
+           this.setState({btnSearchDisabled: true});
+      }else{
+           this.setState({btnSearchDisabled: false});
+      }
     }
 
     changeRegion(event) {
-      this.setState({region: event.target.value});
+      var a = event.target.value.split("#");
+      this.setState({region: a[0], regionName: a[1]});
+      if(a[0] == '' || this.state.valueSearch == '') {
+           this.setState({btnSearchDisabled: true});
+      }else{
+           this.setState({btnSearchDisabled: false});
+      }
     }
-
-    // change(event){
-    //     this.setState({
-    //       btnSearchDisabled: true,
-    //       btnSearch: 'Loading..',
-    //       region: event.target.value
-    //     });
-    //     console.log(this.state.valueSearch);
-    //     request
-    // 		.get('/api/v1/tweet/'+this.state.valueSearch+'/'+event.target.value)
-    // 		.end((err, res) => {
-    // 			if (err) {
-    // 				console.log(err);
-    // 			}
-    //             this.setState({
-    //                 btnSearchDisabled: false,
-    //                 btnSearch: 'Kirim'
-    //             });
-    //             const data = JSON.parse(res.text)
-    //                 this.setState({items:data.statuses});
-    //             })
-    // }
 
     render() {
         return(
@@ -91,9 +84,9 @@ class Tweet extends React.Component {
                     <div className="col-md-2">
                         <select id="pilihDaerah" onChange={this.changeRegion} className="form-control">
                             <option value="pilih">-Pilih-</option>
-                            <option value="-6.926356,107.663432,120km">Jawa Barat</option>
-                            <option value="-7.218152,110.118002,160km">Jawa Tengah</option>
-                            <option value="-9.223029,112.488834,190km">Jawa Timur</option>
+                            <option value="-6.92712,107.603112,60km#Jawa Barat">Jawa Barat</option>
+                            <option value="-6.807228,110.518343,70km#Jawa Tengah">Jawa Tengah</option>
+                            <option value="-7.743389,112.999674,120km#Jawa Timur">Jawa Timur</option>
                         </select>
                     </div>
                     <div className="col-md-4">
@@ -107,14 +100,14 @@ class Tweet extends React.Component {
                         </div>
                     </div>
                 </div>
+                {((this.state.region == '') || (this.state.valueSearch == '')) ?
                 <div className="row">
-                    { this.state.items.map(item=> { return <TweetList key={item.id_str} data={item} /> })}
+                    <h3>Silahkan Search Sendiri</h3> 
+                </div> :
+                <div className="row">
+                    { this.state.items.map(item=> { return <TweetList key={item.id_str} data={item} regionName={this.state.regionName} /> })}
                 </div>
-                {/*<div className="row">
-                    <div className="col-md-4 col-md-offset-5">
-                        <button onClick={this.paging} className="btn btn-primary"> Load More </button>
-                    </div>
-                </div>*/}
+                }
             </div>
         )
     }

@@ -4,6 +4,14 @@ lat  : -6.968956
 lang : 107.904789
 Radius : 120 Km
 
+lat2 : -7.2163
+lang2 : 108.149713
+Radius : 140 Km
+
+lat3 : -6.92712
+lang3 : 107.603112
+Radius : 60 Km
+
 Jawa Timur
 
 lat : -9.223029
@@ -12,9 +20,9 @@ Radius : 190 Km
 
 Jawa Tengah
 
-lat : -7.218152
-lang : 110.118002
-Radius : 160 Km
+lat : -7.413807
+lang : 109.906152
+Radius : 140 Km
 
 DKI
 
