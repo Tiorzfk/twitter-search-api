@@ -27966,8 +27966,13 @@ var TweetList = function (_React$Component) {
                                         lokasi: this.props.regionName,
                                         tweet: this.props.data.text,
                                         status: 'positive'
-                                    }), className: 'btn btn-info btn-md' },
+                                    }), className: 'btn btn-info btn-sm' },
                                 this.state.btnPositif
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-default btn-sm' },
+                                'Netral'
                             ),
                             _react2.default.createElement(
                                 'button',
@@ -27981,7 +27986,7 @@ var TweetList = function (_React$Component) {
                                         lokasi: this.props.regionName,
                                         tweet: this.props.data.text,
                                         status: 'negative'
-                                    }), className: 'btn btn-danger btn-md' },
+                                    }), className: 'btn btn-danger btn-sm' },
                                 this.state.btnNegatif
                             )
                         )

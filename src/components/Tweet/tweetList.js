@@ -94,7 +94,8 @@ class TweetList extends React.Component {
                                     lokasi: this.props.regionName,
                                     tweet: this.props.data.text,
                                     status: 'positive'
-                                })} className="btn btn-info btn-md">{this.state.btnPositif}</button> 
+                                })} className="btn btn-info btn-sm">{this.state.btnPositif}</button> 
+                                <button className="btn btn-default btn-sm">Netral</button>
                                 <button disabled={this.state.disabledBtn} onClick={this.simpan.bind(this,{
                                     id_str:this.props.data.id_str,
                                     username: this.props.data.user.screen_name,
@@ -105,7 +106,7 @@ class TweetList extends React.Component {
                                     lokasi: this.props.regionName,
                                     tweet: this.props.data.text,
                                     status: 'negative'
-                                })} className="btn btn-danger btn-md">{this.state.btnNegatif}</button></p>
+                                })} className="btn btn-danger btn-sm">{this.state.btnNegatif}</button></p>
                             </div>
                         </div>
                     </div>
